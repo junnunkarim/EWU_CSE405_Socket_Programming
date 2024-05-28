@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Client implements Runnable {
   private static final int NUM_CLIENTS = 3;
@@ -20,10 +19,7 @@ public class Client implements Runnable {
   public Client(int clientID, String address, int port) {
     try {
       // connect to server
-      socket = new Socket(address, port);
-      this.socket = socket;
-
-      // this.sender =
+      this.socket = new Socket(address, port);
       this.sender = new PrintWriter(socket.getOutputStream(), true);
       this.reciever =
           new BufferedReader(new InputStreamReader(socket.getInputStream()));

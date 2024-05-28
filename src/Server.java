@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.Random;
 
 public class Server {
   private ServerSocket serverSocket;
@@ -58,8 +57,6 @@ class ClientHandler implements Runnable {
   // for getting input stream from client
   private BufferedReader reciever;
 
-  private Random random;
-
   // constructor
   public ClientHandler(Socket socket) {
     try {
@@ -68,7 +65,6 @@ class ClientHandler implements Runnable {
       this.reciever =
           new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-      this.random = new Random();
     } catch (IOException e) {
       close(socket, sender, reciever);
     }
@@ -109,20 +105,21 @@ class ClientHandler implements Runnable {
   // thread
   @Override
   public void run() {
-    while (socket.isConnected()) {
-      try {
-        String recieve = reciever.readLine();
+    try {
+      int clientID = 0;
+
+      String recieve = " ";
+      String response = " ";
+      String message = " ";
+
+      while (socket.isConnected()) {
+        recieve = reciever.readLine();
 
         if (recieve != null) {
-          int clientID = Integer.parseInt(recieve);
+          clientID = Integer.parseInt(recieve);
           System.out.printf("Client %s connected!\n", clientID);
 
-          String response = "";
-          String message = reciever.readLine();
-
-          while (message == null) {
-            continue;
-          }
+          message = reciever.readLine();
 
           switch (clientID) {
           case 0:
@@ -152,11 +149,9 @@ class ClientHandler implements Runnable {
 
           sendMessage(response);
         }
-      } catch (IOException e) {
-        close(socket, sender, reciever);
-
-        break;
       }
+    } catch (IOException e) {
+      close(socket, sender, reciever);
     }
   }
 }
