@@ -96,10 +96,24 @@ class ClientHandler implements Runnable {
     }
   }
 
-  private String calculateQuadratic(double a, double b, double c) {
-    double result = (4 * a * a) + (2 * b) + c;
+  private String calculateQuadratic(int a, int b, int c) {
+    int discriminant = (b * b) - (4 * a * c);
+    String response = " ";
 
-    return String.format("%.4f", result);
+    if (discriminant > 0) {
+      double root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+      double root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+
+      response = String.format("x1 = %.4f, x2 = %.4f", root1, root2);
+    } else if (discriminant == 0) {
+      double root = (-b) / (2 * a);
+
+      response = String.format("x1 = %.4f", root);
+    } else {
+      response = "No Real solution!";
+    }
+
+    return response;
   }
 
   // thread
@@ -121,6 +135,8 @@ class ClientHandler implements Runnable {
 
           message = reciever.readLine();
 
+          System.out.printf("Client %s Sent: %s!\n", clientID, message);
+
           switch (clientID) {
           case 0:
             // receive string, convert to lowercase, and send back
@@ -137,9 +153,9 @@ class ClientHandler implements Runnable {
             // receive 3 numbers, calculate quadratic formula, and send back
             String[] strings = message.split(" ");
 
-            double a = Double.parseDouble(strings[0]);
-            double b = Double.parseDouble(strings[1]);
-            double c = Double.parseDouble(strings[2]);
+            int a = Integer.parseInt(strings[0]);
+            int b = Integer.parseInt(strings[1]);
+            int c = Integer.parseInt(strings[2]);
             response = calculateQuadratic(a, b, c);
 
             break;

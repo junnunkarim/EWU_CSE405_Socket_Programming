@@ -8,3 +8,6 @@ EWU_CSE405_Socket_Programming/
 │   └── Client.java
 └── Makefile
 ```
+
+# Usage
+First setup two 

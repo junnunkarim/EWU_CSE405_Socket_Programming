@@ -98,14 +98,14 @@ public class Client implements Runnable {
           break;
         case 2:
           // send 3 random numbers
-          double a = random.nextDouble();
-          double b = random.nextDouble();
-          double c = random.nextDouble();
+          int a = random.nextInt(1, 10);
+          int b = random.nextInt(1, 100);
+          int c = random.nextInt(1, 10);
 
-          message = String.format("%.4f %.4f %.4f", a, b, c);
+          message = String.format("%d %d %d", a, b, c);
 
-          System.out.printf("Client %d sent coefficients: %.2f %.2f %.2f\n",
-                            clientID, a, b, c);
+          System.out.printf("Client %d sent coefficients: %d %d %d\n", clientID,
+                            a, b, c);
           break;
         default:
           message = "Invalid Client type!";
@@ -145,7 +145,8 @@ public class Client implements Runnable {
 
   // main
   public static void main(String[] args) throws IOException {
-    String address = "127.0.0.1";
+    String address = "192.168.1.2";
+    // String address = "127.0.0.1";
     int port = 5678;
 
     // create and start threads for each client
