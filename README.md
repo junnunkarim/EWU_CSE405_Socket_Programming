@@ -26,7 +26,7 @@ EWU_CSE405_Socket_Programming
 <details>
 <summary><b>click here</b></summary>
 Work in Progress...
-<details>
+</details>
 
 # Contributors
 - [Junnun Mohamed Karim](https://www.github.com/junnunkarim)
